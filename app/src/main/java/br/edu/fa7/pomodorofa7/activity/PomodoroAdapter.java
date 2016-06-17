@@ -137,7 +137,8 @@ public class PomodoroAdapter extends RecyclerView.Adapter<PomodoroAdapter.Pomodo
                 public void onClick(View v) {
                     ((MainActivity) v.getContext()).stopCronometro();
                     PomodoroDao pomodoroDao = new PomodoroDao(context);
-                    pomodoroDao.delete(pomodoro);
+                    pomodoro.setConcluido(true);
+                    pomodoroDao.update(pomodoro);
                     ((MainActivity) v.getContext()).listarItensPomodoro();
                 }
             });

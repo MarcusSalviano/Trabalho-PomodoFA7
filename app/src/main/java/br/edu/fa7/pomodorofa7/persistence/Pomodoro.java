@@ -11,6 +11,7 @@ public class Pomodoro implements IModel, Serializable{
     private String titulo;
     private String descricao;
     private Integer numPomodoros;
+    private Boolean isConcluido;
 
     public Pomodoro(String titulo, String descricao, Integer numPomodoros) {
         this(null, titulo, descricao, numPomodoros);
@@ -21,6 +22,15 @@ public class Pomodoro implements IModel, Serializable{
         this.titulo = titulo;
         this.descricao = descricao;
         this.numPomodoros = numPomodoros;
+        this.isConcluido = false;
+    }
+
+    public Pomodoro(Integer id, String titulo, String descricao, Integer numPomodoros, Boolean isConcluido) {
+        this.id = id;
+        this.titulo = titulo;
+        this.descricao = descricao;
+        this.numPomodoros = numPomodoros;
+        this.isConcluido = isConcluido;
     }
 
     @Override
@@ -54,5 +64,13 @@ public class Pomodoro implements IModel, Serializable{
 
     public void setNumPomodoros(Integer numPomodoros) {
         this.numPomodoros = numPomodoros;
+    }
+
+    public Boolean isConcluido() {
+        return isConcluido;
+    }
+
+    public void setConcluido(Boolean concluido) {
+        isConcluido = concluido;
     }
 }

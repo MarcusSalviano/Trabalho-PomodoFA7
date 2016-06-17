@@ -22,6 +22,7 @@ public class PomodoroDao  extends GenericDao<Pomodoro> {
         cv.put("titulo", obj.getTitulo());
         cv.put("descricao", obj.getDescricao());
         cv.put("num_pomodoros", obj.getNumPomodoros());
+        cv.put("is_concluido", obj.isConcluido());
 
         return cv;
     }
@@ -32,7 +33,8 @@ public class PomodoroDao  extends GenericDao<Pomodoro> {
         String titulo = cursor.getString(cursor.getColumnIndex("titulo"));
         String descricao = cursor.getString(cursor.getColumnIndex("descricao"));
         Integer numPomodoros = cursor.getInt(cursor.getColumnIndex("num_pomodoros"));
+        Boolean isConcluido = cursor.getInt(cursor.getColumnIndex("is_concluido")) == 1?true:false;
 
-        return new Pomodoro(id, titulo, descricao, numPomodoros);
+        return new Pomodoro(id, titulo, descricao, numPomodoros, isConcluido);
     }
 }

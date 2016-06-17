@@ -64,7 +64,4 @@ public class CadastroActivity extends AppCompatActivity {
 
     }
 
-    private boolean validarTela() {
-        return true;
-    }
 }

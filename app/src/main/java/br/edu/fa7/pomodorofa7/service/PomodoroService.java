@@ -145,14 +145,14 @@ public class PomodoroService  extends Service implements ServiceNotifier {
     private void decreaseNumPomodoros(int idPomodoroRunning) {
         PomodoroDao pomodoroDao = new PomodoroDao(this);
         Pomodoro pomodoro = pomodoroDao.find(idPomodoroRunning);
-        int numPomodoros = pomodoro.getId();
+        int numPomodoros = pomodoro.getNumPomodoros();
 
-        if(numPomodoros > 1 ) {
-            pomodoro.setNumPomodoros(numPomodoros - 1);
-            pomodoroDao.update(pomodoro);
-        } else {
-            pomodoroDao.delete(pomodoro);
+        if(numPomodoros == 1 ) {
+            pomodoro.setConcluido(true);
         }
+        pomodoro.setNumPomodoros(numPomodoros - 1);
+
+        pomodoroDao.update(pomodoro);
     }
 
 

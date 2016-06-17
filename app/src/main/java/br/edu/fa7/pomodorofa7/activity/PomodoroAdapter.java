@@ -3,6 +3,7 @@ package br.edu.fa7.pomodorofa7.activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -51,6 +52,12 @@ public class PomodoroAdapter extends RecyclerView.Adapter<PomodoroAdapter.Pomodo
         holder.descricao.setText(pomodoro.getDescricao());
         holder.numPomodoros.setText("Num. Pomodoros: " + pomodoro.getNumPomodoros().toString());
         holder.pomodoro = pomodoro;
+
+        if(pomodoro.isConcluido()) {
+            holder.cardView.setBackgroundColor(Color.DKGRAY);
+            holder.btnIniciar.setEnabled(false);
+            holder.btnConcluido.setEnabled(false);
+        }
     }
 
     @Override

@@ -3,7 +3,6 @@ package br.edu.fa7.pomodorofa7.activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -69,7 +67,6 @@ public class PomodoroAdapter extends RecyclerView.Adapter<PomodoroAdapter.Pomodo
         TextView numPomodoros;
         Button btnIniciar;
         Button btnConcluido;
-        boolean isStarted = false;
         Pomodoro pomodoro;
 
         public PomodoroViewHolder(View itemView) {
@@ -116,9 +113,8 @@ public class PomodoroAdapter extends RecyclerView.Adapter<PomodoroAdapter.Pomodo
             btnIniciar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(!isStarted && !((MainActivity) v.getContext()).isCronometroStarted()) {
+                    if(!((MainActivity) v.getContext()).isCronometroStarted()) {
                         boolean start = false;
-                        isStarted = true;
                         if(lastIdStarted != pomodoro.getId()){
                             lastIdStarted = pomodoro.getId();
                             start = true;
@@ -126,11 +122,12 @@ public class PomodoroAdapter extends RecyclerView.Adapter<PomodoroAdapter.Pomodo
 
                         btnIniciar.setText("Pausar");
 
-                        ((MainActivity) v.getContext()).startCronometro(start);
-                    } else if(isStarted && ((MainActivity) v.getContext()).isCronometroStarted()){
-                        isStarted = false;
-                        btnIniciar.setText("Iniciar");
-                        ((MainActivity) v.getContext()).stopCronometro();
+                        ((MainActivity) v.getContext()).startCronometro(start, pomodoro.getId());
+                    } else {
+                        if(lastIdStarted == pomodoro.getId()) {
+                            btnIniciar.setText("Iniciar");
+                            ((MainActivity) v.getContext()).stopCronometro();
+                        }
                     }
                 }
             });
@@ -138,7 +135,10 @@ public class PomodoroAdapter extends RecyclerView.Adapter<PomodoroAdapter.Pomodo
             btnConcluido.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    ((MainActivity) v.getContext()).stopCronometro();
+                    PomodoroDao pomodoroDao = new PomodoroDao(context);
+                    pomodoroDao.delete(pomodoro);
+                    ((MainActivity) v.getContext()).listarItensPomodoro();
                 }
             });
 

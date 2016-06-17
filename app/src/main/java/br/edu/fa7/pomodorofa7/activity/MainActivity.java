@@ -27,13 +27,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView cronometro;
     private RecyclerView recyclerView;
     private Button addTarefaButton;
-    private PomodoroDao pomodoroDao;
 
     private boolean isServiceBound;
     private PomodoroService pomodoroService;
     private Intent pomodoroServiceIntent;
     private Handler handler;
 
+    private PomodoroDao pomodoroDao;
     private boolean isCronometroStarted;
 
     @Override
@@ -135,11 +135,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
-    public void startCronometro(boolean start) {
+    public void startCronometro(boolean start, Integer idPomodoroRunning) {
         if(isServiceBound && !isCronometroStarted) {
             isCronometroStarted = true;
             pomodoroService.setCronometroValue(cronometro.getText().toString());
-            pomodoroService.startCronometro(start);
+            pomodoroService.startCronometro(start, idPomodoroRunning);
         }
     }
 
